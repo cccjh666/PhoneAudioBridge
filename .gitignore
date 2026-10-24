@@ -1,0 +1,28 @@
+# 构建产物
+[Bb]in/
+[Oo]bj/
+publish/
+artifacts/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 发布生成的 exe 不入库，改为通过 Release 附件分发
+*.exe
+*.pdb
+*.dll
+
+# 本地日志与配置
+logs/
+*.log
+settings.json
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store

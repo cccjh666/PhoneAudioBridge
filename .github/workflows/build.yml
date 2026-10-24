@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore src/PhoneAudioBridge/PhoneAudioBridge.csproj
+
+      - name: Build
+        run: dotnet build src/PhoneAudioBridge/PhoneAudioBridge.csproj -c Release --no-restore
+
+      - name: Publish self-contained single file
+        run: >
+          dotnet publish src/PhoneAudioBridge/PhoneAudioBridge.csproj
+          -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true
+          -p:EnableCompressionInSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:DebugType=none
+          -o publish
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhoneAudioBridge-win-x64
+          path: publish/PhoneAudioBridge.exe
+          if-no-files-found: error

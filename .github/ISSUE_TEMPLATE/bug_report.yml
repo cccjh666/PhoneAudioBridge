@@ -1,0 +1,86 @@
+name: 问题反馈
+description: 报告连接、音量或界面问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交前请先确认：手机已在 Windows 设置中完成配对，且系统版本为 Windows 10 2004（内部版本 19041）或更高。
+
+        音视频类问题**请附上日志**，否则很难定位是连接层、路由层还是音量层的问题。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述
+      description: 发生了什么，你期望发生什么。
+      placeholder: 点"连接"后状态显示已连接，但手机播放音乐时电脑没有声音……
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开程序，点击"连接"
+        2. 在手机播放音乐
+        3. 拖动音量滑块
+        4. 出现……
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows 版本与内部版本号
+      description: 运行 `winver` 可查看，例如 "Windows 11 23H2 (22631.4317)"。
+      placeholder: Windows 11 (22631.4317)
+    validations:
+      required: true
+
+  - type: input
+    id: phone
+    attributes:
+      label: 手机型号与系统版本
+      placeholder: 手机型号 / Android 版本
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scenario
+    attributes:
+      label: 出现问题时的场景
+      multiple: true
+      options:
+        - 普通播放音乐或视频
+        - 微信语音通话
+        - 微信视频通话
+        - 系统电话
+        - 调整音量时
+        - 连接或重连时
+        - 其它
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: |
+        点面板上的"打开日志"，把最近的日志贴在这里。日志位于 `%LOCALAPPDATA%\PhoneAudioBridge\logs\`。
+        注意：日志包含设备名称与音量数值，不便公开请先自行替换。
+      render: text
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认事项
+      options:
+        - label: 我已阅读「已知限制」，并确认这不是通话音频无法转发、两层音量等已知边界。
+          required: true
+        - label: 我已检查日志中不包含不愿公开的个人信息。
+          required: true
